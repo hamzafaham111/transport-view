@@ -7,7 +7,7 @@ import Home from './Pages/Home/Home';
 import Users from './Pages/Users/Users';
 import RecordBook from './Pages/AddressBook/AddressBook';
 import Transports from './Pages/Transports/Transports';
-import AddNewTransport from './Pages/Transports/NewForm/AddNewDetails';
+import AddNewTransport from './Pages/Transports/NewForm/index';
 import ViewDetails from './Pages/Transports/ViewDetails';
 function App() {
   return (
