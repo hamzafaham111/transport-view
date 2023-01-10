@@ -64,6 +64,7 @@ const AddNew = () => {
                 ID: user._id
             }
         }).then((res) => {
+
             alert(res.data.message)
             history('/dashboard/transports')
         }).catch((err) => { alert(err.response.data.error) })

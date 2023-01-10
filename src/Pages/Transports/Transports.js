@@ -43,7 +43,7 @@ const Transports = () => {
         },
         {
             name: "cancellare",
-            selector: row => <i className='ion-trash-b text-lg text-red-700' onClick={() => { deleteTransport(row._id) }}></i>,
+            selector: row => <i className='ion-trash-b text-lg text-red-700 cursor-pointer' onClick={() => { deleteTransport(row._id) }}></i>,
 
         }
     ]
@@ -59,10 +59,10 @@ const Transports = () => {
     ]
     const user = JSON.parse(localStorage.getItem("user"))
     const deleteTransport = async (val) => {
-        alert(val)
         await axios.get(`${process.env.REACT_APP_DOMAIN}/delete-transports`, {
             headers: {
-                ID: val
+                ID: val,
+                userID: user._id
             }
         }).then((res) => {
 
