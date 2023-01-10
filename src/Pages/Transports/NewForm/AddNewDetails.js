@@ -46,7 +46,7 @@ const AddNew = () => {
     }
 
     const submit = async () => {
-        await axios.post(`http://localhost:4000/transport`, data, {
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/transport`, data, {
             headers: {
                 ID: user._id
             }
