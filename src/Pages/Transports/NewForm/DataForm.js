@@ -5,21 +5,24 @@ const DataForm = () => {
     const history = useNavigate()
     const [recipitentData, setRecipitentData] = useState([])
     const [selectedRecipitent, setSelectedRecipitent] = useState({})
-    const [product, setProduct] = useState({
+    const [products, setProducts] = useState([])
+    let [notOfProducts, setNoOfProducts] = useState([1])
+    const [productData, setProductData] = useState({
         productDescription: "",
+        Packaging: "",
         netPrice: "",
-        pricePerKg: "",
         grossPrice: "",
-        textPrice: ""
+        IVA: ""
     })
+    const [productList, setProductList] = useState([
+
+    ])
     const handleProduct = (e) => {
-        const { name, value } = e.target;
-        setProduct((preValue) => {
-            return {
-                ...preValue,
-                [name]: value
-            }
+        const singleData = products.find((val) => {
+            return val._id == e.target.value;
         })
+
+        setProductData(singleData)
     }
     const [data, setData] = useState({
 
@@ -51,6 +54,7 @@ const DataForm = () => {
         noPackeges: "",
         annotations: "",
     })
+
     const handleRecipitent = (callsign) => {
         const singleData = recipitentData.find((val) => {
             return val.callsign == callsign;
@@ -72,7 +76,10 @@ const DataForm = () => {
             }
         })
     }
-
+    const addNewProduct = () => {
+        setNoOfProducts([...notOfProducts, 1])
+        console.log(notOfProducts);
+    }
     const submit = async () => {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/transport`, { documentData: data, recipientData: selectedRecipitent }, {
             headers: {
@@ -93,6 +100,12 @@ const DataForm = () => {
             setRecipitentData(res.data.data)
         }, [])
     })
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
+            setProducts(res.data.data)
+            console.log(res.data.data)
+        }, [])
+    }, [])
     return (
         <>
             <div>
@@ -112,25 +125,26 @@ const DataForm = () => {
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Beni viaggianti a mezzo:</label>
-                        <input style={{ border: "solid gray 1px" }} type="time" onChange={handleChange} name="goodsTravilingByMeans" />
+                        {/* <input style={{ border: "solid gray 1px" }} type="time" onChange={handleChange} name="goodsTravilingByMeans" /> */}
+                        <select style={{ border: "solid gray 1px" }} name="goodsTravilingByMeans" onChange={handleChange}>
+                            <option></option>
+                            <option value="Mittente">Mittente</option>
+                            <option value="Vettore">Vettore</option>
+                            <option value="destinatario">destinatario</option>
+                        </select>
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo mitente</label>
                         <select style={{ border: "solid gray 1px" }} name="sanderAddress" onChange={handleChange}>
                             <option></option>
-                            <option value="karachi">karachi</option>
-                            <option value="peshawar">peshawar</option>
-                            <option value="Multan">Multan</option>
+                            <option value="Sede Legale">Sede Legale</option>
                         </select>
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Agente incaricato</label>
                         <select style={{ border: "solid gray 1px" }} name="agentInCharge" onChange={handleChange}>
-                            <option></option>
-                            <option value="Mudassir">Mudassir</option>
-                            <option value="uzair">uzair</option>
-                            <option value="ali">ali</option>
-
+                            <option value="empty"></option>
+                            <option value="Non Defento">Non Defento</option>
                         </select>
                     </div>
                     <div className='flex flex-col justify-center w-full'>
@@ -421,8 +435,9 @@ const DataForm = () => {
                         </select>
                     </div>
                 </div>
+
                 <label className="my-0 py-0">Luogo di destinazione dei beni</label>
-                <div className='flex flex-row gap-2 border-2 border-gray-600 my-0 p-1'>
+                <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
 
                     <div className='flex flex-col justify-center w-4/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo ( Scegli un indirizzo tra le sedi del Cliente)</label>
@@ -687,6 +702,67 @@ const DataForm = () => {
                     </div>
                 </div>
 
+                <label className="my-0 py-0">Dettagli prodotti</label>
+                <div className=' border-2 border-gray-600 mb-2 p-1'>
+                    {
+                        notOfProducts.map((val) => {
+                            return (
+                                <div className='flex gap-2'>
+                                    <div className='flex flex-column justify-center w-4/12'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
+                                        <select style={{ border: "solid gray 1px", width: "100%" }} onChange={handleProduct}>
+                                            <option></option>
+                                            {
+                                                products.map((val) => {
+                                                    return (
+                                                        <option value={val._id}>{val.productDescription}</option>
+                                                    )
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imballo</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="career2" onChange={handleChange} value={productData.Packaging} />
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} />
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleChange} />
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Netto</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} value={productData.netPrice} />
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Lordo</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleChange} value={productData.grossPrice}/>
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} />
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale</label>
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleChange} />
+                                    </div>
+                                    <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">IVA %</label>
+
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} value={productData.grossPrice}/>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
+                    <div className='flex justify-end'>
+                        <button className='bg-gray-600 px-2 my-1 text-white font-bold' onClick={addNewProduct}>Save Product</button>
+                    </div>
+                </div>
+
                 <label className="my-0 py-0">Vettori</label>
                 <div className='gap-2 border-2 border-gray-600 mb-2 p-1'>
                     <div className='flex flex-row justify-center w-full my-1'>
@@ -703,7 +779,7 @@ const DataForm = () => {
                     </div>
                 </div>
 
-                <label className="my-0 py-0">DInformazioni sul prodotto</label>
+                {/* <label className="my-0 py-0">DInformazioni sul prodotto</label>
                 <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
@@ -729,7 +805,7 @@ const DataForm = () => {
                         <input style={{ border: "solid gray 1px" }} type="text" name="textPrice" onChange={handleChange} />
                     </div>
 
-                </div>
+                </div> */}
 
                 <label className="my-0 py-0">OAltri dati</label>
                 <div className='border-2 border-gray-600 mb-2 p-1'>

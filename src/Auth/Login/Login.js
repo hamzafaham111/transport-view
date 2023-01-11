@@ -20,12 +20,11 @@ const Login = (Props) => {
     const dashbord = (val) => {
         const user = JSON.stringify(val)
         localStorage.setItem("user", user)
-        alert(val.username)
         history('/dashboard')
     }
     const login = async () => {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/login`, data).then((res) => {
-            console.log(res)
+
             dashbord(res.data.data)
         }).catch((err) => { setStatus(err.response.data.error); progressFunction(false); setErrorShadow("#ED6418 0px 7px 29px 0px") })
     }

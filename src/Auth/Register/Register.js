@@ -32,7 +32,6 @@ const Register = (Props) => {
     const dashboard = (val) => {
         const user = JSON.stringify(val)
         localStorage.setItem("user", user)
-        alert(val.username)
         history('/dashboard')
         window.location.reload(true);
     }
