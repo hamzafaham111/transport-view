@@ -5,6 +5,22 @@ const DataForm = () => {
     const history = useNavigate()
     const [recipitentData, setRecipitentData] = useState([])
     const [selectedRecipitent, setSelectedRecipitent] = useState({})
+    const [product, setProduct] = useState({
+        productDescription: "",
+        netPrice: "",
+        pricePerKg: "",
+        grossPrice: "",
+        textPrice: ""
+    })
+    const handleProduct = (e) => {
+        const { name, value } = e.target;
+        setProduct((preValue) => {
+            return {
+                ...preValue,
+                [name]: value
+            }
+        })
+    }
     const [data, setData] = useState({
 
         docNo: "",
@@ -15,10 +31,11 @@ const DataForm = () => {
         agentInCharge: "",
         status: "",
         recipientName: "",
-        // recipientaddress: "",
-        // recipientPostalCode: "",
-        // recipientCity: "",
-        // recipientProvince: "",
+        productDescription: "",
+        netPrice: "",
+        pricePerKg: "",
+        grossPrice: "",
+        textPrice: "",
         recipientNation: "",
         goodDestinationAddress: "",
         goodDestinationPostalCode: "",
@@ -688,44 +705,30 @@ const DataForm = () => {
 
                 <label className="my-0 py-0">DInformazioni sul prodotto</label>
                 <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
-
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
-                        <input recipitentData type="text" style={{ border: "solid gray 1px" }} name="productDescription" />
-
-                    </div>
-                    <div className='flex flex-col justify-center w-1/12'>
-                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="productQuantity" />
+                        <input recipitentData type="text" style={{ border: "solid gray 1px" }} name="productDescription" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="pricePerKg" />
+                        <input style={{ border: "solid gray 1px" }} type="text" name="pricePerKg" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">
                             Prezzo Netto</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="netPrice" />
+                        <input style={{ border: "solid gray 1px" }} type="text" name="netPrice" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Lordo
                         </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="grossPrice" />
+                        <input style={{ border: "solid gray 1px" }} type="text" name="grossPrice" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile
                         </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="textPrice" />
+                        <input style={{ border: "solid gray 1px" }} type="text" name="textPrice" onChange={handleChange} />
                     </div>
-                    <div className='flex flex-col justify-center w-1/12'>
-                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale
-                        </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="subTotal" />
-                    </div>
-                    <div className='flex flex-col justify-center w-1/12'>
-                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">IVA %</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="IVA %<" />
-                    </div>
+
                 </div>
 
                 <label className="my-0 py-0">OAltri dati</label>

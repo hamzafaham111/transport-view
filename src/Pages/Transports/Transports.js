@@ -31,10 +31,10 @@ const Transports = () => {
         //     name: "Relations",
         //     selector: row => row.relations
         // },
-        {
-            name: "download",
-            selector: row => <div><i className='ion-android-download text-lg text-orange-700 cursor-pointer'></i></div>,
-        },
+        // {
+        //     name: "download",
+        //     selector: row => <div><i className='ion-android-download text-lg text-orange-700 cursor-pointer'></i></div>,
+        // },
         {
             name: "vista",
             selector: row => <Link to={`view-details/${row._id}`}><i className='ion-eye cursor-pointer text-lg text-green-700'></i></Link>,
