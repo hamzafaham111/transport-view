@@ -9,6 +9,7 @@ import RecordBook from './Pages/AddressBook/AddressBook';
 import Transports from './Pages/Transports/Transports';
 import AddNewTransport from './Pages/Transports/NewForm/index';
 import ViewDetails from './Pages/Transports/ViewDetails';
+import EditForm from './Pages/Transports/EditForm/EditForm';
 function App() {
   return (
     <div>
@@ -20,7 +21,8 @@ function App() {
           <Route path='record-book' element={<RecordBook />} />
           <Route path='transports' element={<Transports />} />
           <Route path='transports/add-new-transport' element={<AddNewTransport />} />
-          <Route path='transports/view-details/:transportID' element={<ViewDetails />} />
+          <Route path='transports/view-details/:documentID' element={<ViewDetails />} />
+          <Route path='transports/edit-document/:documentID' element={<EditForm />} />
         </Route>
       </Routes>
     </div>

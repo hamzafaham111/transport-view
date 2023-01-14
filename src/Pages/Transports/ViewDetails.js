@@ -4,12 +4,12 @@ import Breadcrumb from '../../components/Breadcrumb'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 const ViewDetails = () => {
-    const { transportID } = useParams();
+    const { documentID } = useParams();
     const [data, setData] = useState({})
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_DOMAIN}/display-transport-view`, {
             headers: {
-                id: transportID
+                id: documentID
             }
         }).then((res) => {
             setData(res.data.data)

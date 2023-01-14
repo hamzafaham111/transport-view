@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 const Breadcrumb = (Props) => {
     return (
         <>
@@ -12,6 +12,11 @@ const Breadcrumb = (Props) => {
                         <div className="col-sm-6">
                             <ol className="breadcrumb float-sm-right">
                                 <li className="breadcrumb-item"><a href="/dashboard">Casa</a></li>
+                                {
+                                    Props.link ? <>
+                                        <li className="breadcrumb-item active"><Link to={Props.link}>{Props.in}</Link></li>
+                                    </> : <></>
+                                }
                                 <li className="breadcrumb-item active">{Props.t}</li>
                             </ol>
                         </div>

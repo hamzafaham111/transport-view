@@ -5,6 +5,7 @@ import AddNewForm from './AddNewForm'
 import axios from 'axios'
 const AddressBook = () => {
     const [data, setData] = useState([])
+    const [loading, setLoading] = useState("block")
     const [search, setSearch] = useState();
     const [callsign, setCallsign] = useState([]);
     const [filtered, setFiltered] = useState([])
@@ -90,6 +91,7 @@ const AddressBook = () => {
                 ID: user._id
             }
         }).then((res) => {
+            setLoading("none")
             setData(res.data.data)
             setFiltered(res.data.data)
             setCallsign(res.data.callsignes)
@@ -134,6 +136,9 @@ const AddressBook = () => {
                                 />
                             </div>
                             <div className='mx-1'>
+                                <div style={{ display: loading, textAlign: "center", marginTop: "30px" }}>
+                                    <span className='font-bold text-lg mt-4'>Loading...</span>
+                                </div>
                                 {
 
                                     filtered.map((val, i) => {
@@ -159,7 +164,6 @@ const AddressBook = () => {
                                             </div>
                                         );
                                     })
-
                                 }
                             </div>
                         </div>

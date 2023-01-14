@@ -52,25 +52,18 @@ const Navbar = () => {
         <section className="content">
             <div className="container-fluid">
                 <div>
-                    <div>
-                        {/* Navbar */}
-                        <nav className="main-headerr navbar navbar-expand navbar-dark navbar-dark">
-                            {/* Left navbar links */}
-                            <ul className="navbar-nav">
-                                <li className="nav-item">
-                                    <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
-                                </li>
-                                {/* <li className="nav-item d-none d-sm-inline-block">
-                            <a href="index3.html" className="nav-link">Home</a>
-                        </li>
-                        <li className="nav-item d-none d-sm-inline-block">
-                            <a href="#" className="nav-link">Contact</a>
-                        </li> */}
-                            </ul>
-                            {/* Right navbar links */}
-                            <ul className="navbar-nav ml-auto">
-                                {/* Navbar Search */}
-                                {/* <li className="nav-item">
+                    {/* Navbar */}
+                    <nav className="main-headerr navbar navbar-expand navbar-dark navbar-dark">
+                        {/* Left navbar links */}
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
+                            </li>
+                        </ul>
+                        {/* Right navbar links */}
+                        <ul className="navbar-nav ml-auto">
+                            {/* Navbar Search */}
+                            {/* <li className="nav-item">
                             <a className="nav-link" data-widget="navbar-search" href="#" role="button">
                                 <i className="fas fa-search" />
                             </a>
@@ -90,8 +83,8 @@ const Navbar = () => {
                                 </form>
                             </div>
                         </li> */}
-                                {/* Messages Dropdown Menu */}
-                                {/* <li className="nav-item dropdown">
+                            {/* Messages Dropdown Menu */}
+                            {/* <li className="nav-item dropdown">
                             <a className="nav-link" data-toggle="dropdown" href="#">
                                 <i className="far fa-comments" />
                                 <span className="badge badge-danger navbar-badge">3</span>
@@ -148,8 +141,8 @@ const Navbar = () => {
                                 <a href="#" className="dropdown-item dropdown-footer">See All Messages</a>
                             </div>
                         </li> */}
-                                {/* Notifications Dropdown Menu */}
-                                {/* <li className="nav-item dropdown">
+                            {/* Notifications Dropdown Menu */}
+                            {/* <li className="nav-item dropdown">
                             <a className="nav-link" data-toggle="dropdown" href="#">
                                 <i className="far fa-bell" />
                                 <span className="badge badge-warning navbar-badge">15</span>
@@ -180,44 +173,43 @@ const Navbar = () => {
                                 <i className="fas fa-expand-arrows-alt" />
                             </a>
                         </li> */}
-                                {/* <li className="nav-item">
+                            {/* <li className="nav-item">
                             <a className="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
                                 <i className="fas fa-th-large" />
                             </a>
                         </li> */}
-                                <div>
-                                    <IconButton
-                                        aria-label="account of current user"
-                                        aria-controls="menu-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleMenu}
-                                        color="inherit"
-                                    >
-                                        <Avatar src="empty" alt={user.username} style={{ width: "25px", height: "25px" }} />
-                                    </IconButton>
-                                    <Menu
-                                        id="menu-appbar"
-                                        anchorEl={anchorEl}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        keepMounted
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        open={open}
-                                        onClose={handleClose}
-                                    >
-                                        <MenuItem onClick={handleClose}>{user.username}</MenuItem>
-                                        <MenuItem onClick={logout}>Logout</MenuItem>
-                                    </Menu>
-                                </div>
-                            </ul>
-                        </nav>
-                        {/* /.navbar */}
-                    </div>
+                            <div>
+                                <IconButton
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleMenu}
+                                    color="inherit"
+                                >
+                                    <Avatar src="empty" alt={user.username} style={{ width: "25px", height: "25px" }} />
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={open}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleClose}>{user.username}</MenuItem>
+                                    <MenuItem onClick={logout}>Logout</MenuItem>
+                                </Menu>
+                            </div>
+                        </ul>
+                    </nav>
+                    {/* /.navbar */}
                 </div>
             </div>
         </section>
