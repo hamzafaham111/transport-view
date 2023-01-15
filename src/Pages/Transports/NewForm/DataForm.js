@@ -213,7 +213,7 @@ const DataForm = () => {
                 <label className="my-0 py-0">Luogo di destinazione dei beni</label>
                 <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
 
-                    <div className='flex flex-col justify-center w-4/12'>
+                    <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo ( Scegli un indirizzo tra le sedi del Cliente)</label>
                         <input style={{ border: "solid gray 1px" }} type="text" name="goodDestinationAddress" onChange={handleChange} />
                     </div>
@@ -246,7 +246,7 @@ const DataForm = () => {
                         finalProducts.map((val) => {
                             return (
                                 <div className='flex gap-2'>
-                                    <div className='flex flex-column justify-center w-4/12'>
+                                    <div className='flex flex-column justify-center w-3/12'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
                                         <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={val.productDescription} />
                                     </div>
@@ -280,15 +280,17 @@ const DataForm = () => {
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" onChange={handleProduct} >IVA %</label>
-
                                         <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name=" IVA" onChange={handleChange} value={val.IVA} />
                                     </div>
+                                    {/* <div className='w-1/12 flex justify-center mb-1 items-end'>
+                                        <span><i className='ion-close-circled text-lg'></i></span>
+                                    </div> */}
                                 </div>
                             )
                         })
                     }
                     <div className='flex gap-2'>
-                        <div className='flex flex-column justify-center w-4/12'>
+                        <div className='flex flex-column justify-center w-3/12'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
                             <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
                             <div style={{ display: list }}>
