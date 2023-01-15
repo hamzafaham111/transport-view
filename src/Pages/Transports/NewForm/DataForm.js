@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import Select2 from 'react-select2-wrapper';
+
 const DataForm = () => {
     const history = useNavigate()
     const [recipitentData, setRecipitentData] = useState([])
     const [selectedRecipitent, setSelectedRecipitent] = useState({})
     const [products, setProducts] = useState([])
-    let [notOfProducts, setNoOfProducts] = useState([1])
+    let [notOfProducts, setNoOfProducts] = useState([])
+    const [list, setList] = useState("none")
+    const [finalProducts, setFinalProducts] = useState([])
     const [productData, setProductData] = useState({
         productDescription: "",
         Packaging: "",
@@ -14,16 +18,32 @@ const DataForm = () => {
         grossPrice: "",
         IVA: ""
     })
-    const [productList, setProductList] = useState([
 
-    ])
-    const handleProduct = (e) => {
-        const singleData = products.find((val) => {
-            return val._id == e.target.value;
+    const addProduct = () => {
+        setFinalProducts([...finalProducts, productData])
+    }
+    const handleProduct = async (e) => {
+        const { name, value } = e.target;
+        if (name == "productDescription") {
+            setList("block")
+            await axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
+                setProducts(res.data.data)
+            }, [])
+        }
+        setProductData((preValue) => {
+            return {
+                ...preValue,
+                [name]: value
+            }
         })
-
+    }
+    const clickedProduct = (id) => {
+        const singleData = products.find((val) => {
+            return val._id == id
+        })
         setProductData(singleData)
     }
+
     const [data, setData] = useState({
 
         docNo: "",
@@ -76,10 +96,7 @@ const DataForm = () => {
             }
         })
     }
-    const addNewProduct = () => {
-        setNoOfProducts([...notOfProducts, 1])
-        console.log(notOfProducts);
-    }
+
     const submit = async () => {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/transport`, { documentData: data, recipientData: selectedRecipitent }, {
             headers: {
@@ -100,12 +117,6 @@ const DataForm = () => {
             setRecipitentData(res.data.data)
         }, [])
     })
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
-            setProducts(res.data.data)
-            console.log(res.data.data)
-        }, [])
-    }, [])
     return (
         <>
             <div>
@@ -161,9 +172,8 @@ const DataForm = () => {
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Denominazione</label>
-                        {/* <input recipitentData type="text" name="recipientName" onChange={handleChange} /> */}
                         <select className='w-full' style={{ border: "solid gray 1px" }} name="recipientName" onChange={handleChange}>
-                            <option></option>
+                            <option>Seleziona Denominazione</option>
                             {
                                 recipitentData.map((val) => {
                                     return (
@@ -233,61 +243,103 @@ const DataForm = () => {
                 <label className="my-0 py-0">Dettagli prodotti</label>
                 <div className=' border-2 border-gray-600 mb-2 p-1'>
                     {
-                        notOfProducts.map((val) => {
+                        finalProducts.map((val) => {
                             return (
                                 <div className='flex gap-2'>
                                     <div className='flex flex-column justify-center w-4/12'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
-                                        <select style={{ border: "solid gray 1px", width: "100%" }} onChange={handleProduct}>
-                                            <option></option>
-                                            {
-                                                products.map((val) => {
-                                                    return (
-                                                        <option value={val._id}>{val.productDescription}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
+                                        <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={val.productDescription} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imballo</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="career2" onChange={handleChange} value={productData.Packaging} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="Packaging" onChange={handleProduct} value={val.Packaging} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleChange} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Netto</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} value={productData.netPrice} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={val.netPrice} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Lordo</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleChange} value={productData.grossPrice} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="grossPrice" onChange={handleProduct} value={val.grossPrice} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleChange} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
-                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">IVA %</label>
+                                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" onChange={handleProduct} >IVA %</label>
 
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleChange} value={productData.grossPrice} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name=" IVA" onChange={handleChange} value={val.IVA} />
                                     </div>
                                 </div>
                             )
                         })
                     }
+                    <div className='flex gap-2'>
+                        <div className='flex flex-column justify-center w-4/12'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
+                            <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
+                            <div style={{ display: list }}>
+                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", top: "52%", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", }} onClick={(e) => { setList("none") }}>
+                                    {
+                                        products.map((val) => {
+                                            return (
+                                                <li className='hover:bg-blue-200 cursor-pointer p-1' onClick={() => { clickedProduct(val._id) }}>{val.productDescription}</li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
+
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imballo</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="Packaging" onChange={handleProduct} value={productData.Packaging} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Netto</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={productData.netPrice} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Lordo</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="grossPrice" onChange={handleProduct} value={productData.grossPrice} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale</label>
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
+                        </div>
+                        <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
+                            <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" onChange={handleProduct} >IVA %</label>
+
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name=" IVA" onChange={handleChange} value={productData.IVA} />
+                        </div>
+                    </div>
                     <div className='flex justify-end'>
-                        <button className='bg-gray-600 px-2 my-1 text-white font-bold' onClick={addNewProduct}>Save Product</button>
+                        <button className='bg-gray-600 px-2 my-1 text-white font-bold' onClick={addProduct}>Aggiungi nuovo prodotto</button>
                     </div>
                 </div>
 
