@@ -5,6 +5,7 @@ import Select2 from 'react-select2-wrapper';
 
 const DataForm = () => {
     const history = useNavigate()
+    const [filtered, setFiltered] = useState([])
     const [recipitentData, setRecipitentData] = useState([])
     const [selectedRecipitent, setSelectedRecipitent] = useState({})
     const [products, setProducts] = useState([])
@@ -32,9 +33,11 @@ const DataForm = () => {
         })
         if (name == "productDescription") {
             setList("block")
-            await axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
-                setProducts(res.data.data)
-            }, [])
+              const result = products.filter((val) => {
+            return val.productDescription.match(e.target.value);
+        })
+        console.log(result)
+        setProducts(result)
         }
     }
     const clickedProduct = (id) => {
@@ -115,8 +118,12 @@ const DataForm = () => {
             }
         }).then((res) => {
             setRecipitentData(res.data.data)
-        }, [])
-    })
+        })
+axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
+                setProducts(res.data.data)
+            })
+
+    },[])
     return (
         <>
             <form onSubmit={submit} onClick={(e)=>{setList("none")} } >
@@ -294,7 +301,7 @@ const DataForm = () => {
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
                             <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
                             <div style={{ display: list }}>
-                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", height: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
+                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", minheight: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
                                     {
                                         products.map((val) => {
                                             return (
