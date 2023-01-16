@@ -294,7 +294,7 @@ const DataForm = () => {
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
                             <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
                             <div style={{ display: list }}>
-                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", top: "52%", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", }} onClick={(e) => { setList("none") }}>
+                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", height: "300px", overflow: "auto" }} onClick={(e) => { setList("none") }}>
                                     {
                                         products.map((val) => {
                                             return (
