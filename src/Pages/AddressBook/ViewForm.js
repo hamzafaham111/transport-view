@@ -18,9 +18,12 @@ const ViewForm = (Props) => {
         setData(Props.data[0])
         setEdit(Props.disabled)
     }, [Props])
+    const changeTitle = () => {
+
+    }
     const handleEdit = () => {
         setEdit(false)
-        Props.cb("Modifica dati")
+        // Props.cb("Modifica dati")
     }
     const handleChange = (e) => {
         const { name, value } = e.target;
