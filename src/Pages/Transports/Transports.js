@@ -53,15 +53,18 @@ const Transports = () => {
     }
     const user = JSON.parse(localStorage.getItem("user"))
     const deleteTransport = async (val) => {
-        await axios.get(`${process.env.REACT_APP_DOMAIN}/delete-transports`, {
-            headers: {
-                ID: val,
-                userID: user._id
-            }
-        }).then((res) => {
-            setData(res.data.data);
-            window.location.reload(true)
-        })
+
+        if (window.confirm("Are you sure you want to delete this item?")) {
+            await axios.get(`${process.env.REACT_APP_DOMAIN}/delete-transports`, {
+                headers: {
+                    ID: val,
+                    userID: user._id
+                }
+            }).then((res) => {
+                setData(res.data.data);
+                window.location.reload(true)
+            })
+        }
     }
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_DOMAIN}/display-transports`, {
