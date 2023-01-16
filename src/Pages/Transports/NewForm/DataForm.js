@@ -302,7 +302,7 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
                             <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
                             <div style={{ display: list }}>
-                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", minheight: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
+                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", borderRadius: "10px", minheight: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
                                     {
                                         filtered.map((val) => {
                                             return (
