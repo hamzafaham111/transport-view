@@ -24,18 +24,18 @@ const DataForm = () => {
     }
     const handleProduct = async (e) => {
         const { name, value } = e.target;
+         setProductData((preValue) => {
+            return {
+                ...preValue,
+                [name]: value
+            }
+        })
         if (name == "productDescription") {
             setList("block")
             await axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                 setProducts(res.data.data)
             }, [])
         }
-        setProductData((preValue) => {
-            return {
-                ...preValue,
-                [name]: value
-            }
-        })
     }
     const clickedProduct = (id) => {
         const singleData = products.find((val) => {
