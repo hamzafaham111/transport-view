@@ -119,7 +119,7 @@ const DataForm = () => {
     })
     return (
         <>
-            <form onSubmit={submit}>
+            <form onSubmit={submit} onClick={(e)=>{setList("none")} } >
                 <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
 
                     <div className='flex flex-col justify-center w-full'>
@@ -241,7 +241,7 @@ const DataForm = () => {
                 </div>
 
                 <label className="my-0 py-0">Dettagli prodotti</label>
-                <div className=' border-2 border-gray-600 mb-2 p-1'>
+                <div className=' border-2 border-gray-600 mb-2 p-1' onClick={(e)=>{setList("none")} } >
                     {
                         finalProducts.map((val) => {
                             return (
@@ -294,7 +294,7 @@ const DataForm = () => {
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
                             <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
                             <div style={{ display: list }}>
-                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", height: "300px", overflow: "auto" }} onClick={(e) => { setList("none") }}>
+                                <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", height: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
                                     {
                                         products.map((val) => {
                                             return (
@@ -308,36 +308,36 @@ const DataForm = () => {
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imballo</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="Packaging" onChange={handleProduct} value={productData.Packaging} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="Packaging" onChange={handleProduct} value={productData.Packaging} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Netto</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={productData.netPrice} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={productData.netPrice} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Lordo</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="grossPrice" onChange={handleProduct} value={productData.grossPrice} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="grossPrice" onChange={handleProduct} value={productData.grossPrice} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" onChange={handleProduct} >IVA %</label>
 
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name=" IVA" onChange={handleChange} value={productData.IVA} />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name=" IVA" onChange={handleChange} value={productData.IVA} onClick={(e)=>{setList("none")} } />
                         </div>
                     </div>
                     <div className='flex justify-end'>
