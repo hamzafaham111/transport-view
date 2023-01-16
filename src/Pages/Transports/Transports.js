@@ -60,6 +60,7 @@ const Transports = () => {
             }
         }).then((res) => {
             setData(res.data.data);
+            window.location.reload(true)
         })
     }
     useEffect(() => {
