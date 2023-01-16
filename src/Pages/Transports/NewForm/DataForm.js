@@ -31,7 +31,10 @@ const DataForm = () => {
                 [name]: value
             }
         })
-        if (name == "productDescription") {
+       if(value==""){
+        setList("none")
+       }else{
+      if (name == "productDescription") {
             setList("block")
               const result = products.filter((val) => {
             return val.productDescription.match(e.target.value);
@@ -39,6 +42,7 @@ const DataForm = () => {
         console.log(result)
         setFiltered(result)
         }
+    }
     }
     const clickedProduct = (id) => {
         const singleData = products.find((val) => {
