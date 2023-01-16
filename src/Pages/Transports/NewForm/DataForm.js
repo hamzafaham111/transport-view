@@ -310,7 +310,7 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                                     {
                                         filtered.map((val) => {
                                             return (
-                                                <li className='hover:bg-blue-200 cursor-pointer p-1' onClick={() => { clickedProduct(val._id) }}>{val.productDescription}</li>
+                                                <li className='hover:bg-blue-500 hover:text-white cursor-pointer p-1 bg-gray-300' onClick={() => { clickedProduct(val._id) }}>{val.productDescription}</li>
                                             )
                                         })
                                     }
