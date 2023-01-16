@@ -37,7 +37,7 @@ const DataForm = () => {
             return val.productDescription.match(e.target.value);
         })
         console.log(result)
-        setProducts(result)
+        setFiltered(result)
         }
     }
     const clickedProduct = (id) => {
@@ -121,6 +121,7 @@ const DataForm = () => {
         })
 axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                 setProducts(res.data.data)
+                setFiltered(res.data.data)
             })
 
     },[])
@@ -303,7 +304,7 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                             <div style={{ display: list }}>
                                 <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", border: "solid gray 1px", borderRadius: "10px", minheight: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
                                     {
-                                        products.map((val) => {
+                                        filtered.map((val) => {
                                             return (
                                                 <li className='hover:bg-blue-200 cursor-pointer p-1' onClick={() => { clickedProduct(val._id) }}>{val.productDescription}</li>
                                             )
