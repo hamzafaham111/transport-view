@@ -14,35 +14,49 @@ const DataForm = () => {
     const [finalProducts, setFinalProducts] = useState([])
     const [productData, setProductData] = useState({
         productDescription: "",
+        productQuantity: "",
+        priceKG: "",
         Packaging: "",
         netPrice: "",
         grossPrice: "",
+        texPrice: "",
+        subTotal: "",
         IVA: ""
     })
 
     const addProduct = () => {
         setFinalProducts([...finalProducts, productData])
+        setProductData({
+            productDescription: "",
+            productQuantity: "",
+            priceKG: "",
+            Packaging: "",
+            netPrice: "",
+            grossPrice: "",
+            texPrice: "",
+            subTotal: "",
+            IVA: ""
+        })
     }
     const handleProduct = async (e) => {
         const { name, value } = e.target;
-         setProductData((preValue) => {
+        setProductData((preValue) => {
             return {
                 ...preValue,
                 [name]: value
             }
         })
-       if(value==""){
-        setList("none")
-       }else{
-      if (name == "productDescription") {
-            setList("block")
-              const result = products.filter((val) => {
-            return val.productDescription.match(e.target.value);
-        })
-        console.log(result)
-        setFiltered(result)
+        if (value == "") {
+            setList("none")
+        } else {
+            if (name == "productDescription") {
+                setList("block")
+                const result = products.filter((val) => {
+                    return val.productDescription.match(e.target.value);
+                })
+                setFiltered(result)
+            }
         }
-    }
     }
     const clickedProduct = (id) => {
         const singleData = products.find((val) => {
@@ -61,11 +75,6 @@ const DataForm = () => {
         agentInCharge: "",
         status: "",
         recipientName: "",
-        productDescription: "",
-        netPrice: "",
-        pricePerKg: "",
-        grossPrice: "",
-        textPrice: "",
         recipientNation: "",
         goodDestinationAddress: "",
         goodDestinationPostalCode: "",
@@ -104,13 +113,13 @@ const DataForm = () => {
         })
     }
 
-    const submit = async () => {
-        await axios.post(`${process.env.REACT_APP_DOMAIN}/transport`, { documentData: data, recipientData: selectedRecipitent }, {
+    const submit = async (e) => {
+        e.preventDefault();
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/add-document`, { documentData: data, recipientData: selectedRecipitent, finalProducts, lastProducts: productData }, {
             headers: {
                 ID: user._id
             }
         }).then((res) => {
-
             alert(res.data.message)
             history('/dashboard/transports')
         }).catch((err) => { alert(err.response.data.error) })
@@ -123,15 +132,15 @@ const DataForm = () => {
         }).then((res) => {
             setRecipitentData(res.data.data)
         })
-axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
-                setProducts(res.data.data)
-                setFiltered(res.data.data)
-            })
+        axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
+            setProducts(res.data.data)
+            setFiltered(res.data.data)
+        })
 
-    },[])
+    }, [])
     return (
         <>
-            <form onSubmit={submit} onClick={(e)=>{setList("none")} } >
+            <form onClick={(e) => { setList("none") }} >
                 <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
 
                     <div className='flex flex-col justify-center w-full'>
@@ -184,7 +193,7 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Denominazione</label>
-                        <select className='w-full' style={{ border: "solid gray 1px" }} name="recipientName" onChange={handleChange}>
+                        <select className='w-full' style={{ border: "solid gray 1px" }} required name="recipientName" onChange={handleChange}>
                             <option>Seleziona Denominazione</option>
                             {
                                 recipitentData.map((val) => {
@@ -209,12 +218,12 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                         <input style={{ border: "solid gray 1px" }} type="text" name="recipientCity" onChange={handleChange} value={selectedRecipitent.city} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
-                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Provincia
+                        <label style={{ fontWeight: "500", fontSize: "12px" }} required className="my-0 py-0">Provincia
                         </label>
                         <input style={{ border: "solid gray 1px" }} type="text" name="recipientProvince" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
-                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Nazione</label>
+                        <label style={{ fontWeight: "500", fontSize: "12px" }} required className="my-0 py-0">Nazione</label>
                         <select style={{ border: "solid gray 1px" }} name="recipientNation" onChange={handleChange}>
                             <option>--selezionare--</option>
                             <option value="Italia">Italia</option>
@@ -227,25 +236,25 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo ( Scegli un indirizzo tra le sedi del Cliente)</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="goodDestinationAddress" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodDestinationAddress" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">CAP</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="goodDestinationPostalCode" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodDestinationPostalCode" onChange={handleChange} />
                     </div>
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Città</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="goodsDestinationCity" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodsDestinationCity" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Provincia
                         </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="goodDestinationProvince" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodDestinationProvince" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" >Nazione</label>
-                        <select style={{ border: "solid gray 1px" }} name="goodDestinationNation" onChange={handleChange} >
+                        <select style={{ border: "solid gray 1px" }} required name="goodDestinationNation" onChange={handleChange} >
                             <option>--selezionare--</option>
                             <option value="Italia">Italia</option>
                         </select>
@@ -253,7 +262,7 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                 </div>
 
                 <label className="my-0 py-0">Dettagli prodotti</label>
-                <div className=' border-2 border-gray-600 mb-2 p-1' onClick={(e)=>{setList("none")} } >
+                <div className=' border-2 border-gray-600 mb-2 p-1' onClick={(e) => { setList("none") }} >
                     {
                         finalProducts.map((val) => {
                             return (
@@ -268,11 +277,11 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="productQuantity" onChange={handleProduct} value={val.productQuantity} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="priceKG" onChange={handleProduct} value={val.priceKG} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Netto</label>
@@ -284,11 +293,11 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={val.netPrice} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="subTotal" onChange={handleProduct} value={val.subTotal} />
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" onChange={handleProduct} >IVA %</label>
@@ -320,40 +329,40 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imballo</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="Packaging" onChange={handleProduct} value={productData.Packaging} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder=".." type="text" name="Packaging" onChange={handleProduct} value={productData.Packaging} onClick={(e) => { setList("none") }} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Quantità</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="productQuantity" onChange={handleProduct} onClick={(e) => { setList("none") }} value={productData.productQuantity} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Peso Kg</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="priceKG" onChange={handleProduct} value={productData.priceKG} onClick={(e) => { setList("none") }} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Netto</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={productData.netPrice} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="netPrice" onChange={handleProduct} value={productData.netPrice} onClick={(e) => { setList("none") }} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Prezzo Lordo</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="grossPrice" onChange={handleProduct} value={productData.grossPrice} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="grossPrice" onChange={handleProduct} value={productData.grossPrice} onClick={(e) => { setList("none") }} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Imponibile</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career3" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="texPrice" onChange={handleProduct} value={productData.texPrice} onClick={(e) => { setList("none") }} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12  my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Subtotale</label>
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="career2" onChange={handleProduct} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="subTotal" onChange={handleProduct} value={productData.subTotal} onClick={(e) => { setList("none") }} />
                         </div>
                         <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" onChange={handleProduct} >IVA %</label>
 
-                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name=" IVA" onChange={handleChange} value={productData.IVA} onClick={(e)=>{setList("none")} } />
+                            <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="text" name="IVA" onChange={handleProduct} value={productData.IVA} onClick={(e) => { setList("none") }} />
                         </div>
                     </div>
                     <div className='flex justify-end'>
-                        <button className='bg-gray-600 px-2 my-1 text-white font-bold' onClick={addProduct}>Aggiungi nuovo prodotto</button>
+                        <snap className='bg-gray-600 px-2 my-1 text-white font-bold cursor-pointer' onClick={addProduct}>Aggiungi nuovo prodotto</snap>
                     </div>
                 </div>
 
@@ -402,7 +411,7 @@ axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
                     </div>
                 </div>
                 <div className='mt-2 flex justify-end'>
-                    <input type="submit" className='bg-gray-600 text-white px-4 py-2 font-bold text-sm' value="Salva dati" />
+                    <input type="submit" className='bg-gray-600 text-white px-4 py-2 font-bold text-sm' value="Salva dati" onClick={submit} />
                 </div>
             </form>
         </>

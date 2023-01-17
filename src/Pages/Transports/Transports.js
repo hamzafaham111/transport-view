@@ -9,6 +9,7 @@ const Transports = () => {
     const [pending, setPending] = useState(true);
     const [search, setSearch] = useState();
     const [filtered, setFiltered] = useState([])
+    const [years, setYears] = useState([])
     const cols = [
         {
             name: "Num. Doc.",
@@ -44,11 +45,9 @@ const Transports = () => {
         }
     ]
     const dates = (e) => {
-        alert(e.target.value)
         const result = data.filter((val) => {
             return val.docDate.match(e.target.value);
         })
-        console.log(result)
         setFiltered(result)
     }
     const user = JSON.parse(localStorage.getItem("user"))
@@ -74,6 +73,7 @@ const Transports = () => {
         }).then((res) => {
             setFiltered(res.data.data)
             setData(res.data.data)
+            setYears(res.data.dates)
             setPending(false);
         })
     }, [])
@@ -109,30 +109,11 @@ const Transports = () => {
                                 <label className="text-sm font-medium text-gray-500">Search By Year</label>
                                 <select style={{ border: "solid gray 1px", padding: "0 10px", color: "gray" }} className="text-sm py-1" onChange={dates}>
                                     <option value="">--select year--</option>
-                                    <option value="2023">2023</option>
-                                    <option value="2022">2022</option>
-                                    <option value="2021">2021</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2008">2008</option>
-                                    <option value="2007">2007</option>
-                                    <option value="2006">2006</option>
-                                    <option value="2005">2005</option>
-                                    <option value="2004">2004</option>
-                                    <option value="2003">2003</option>
-                                    <option value="2002">2002</option>
-                                    <option value="2001">2001</option>
-                                    <option value="2000">2000</option>
+                                    {
+                                        years.map((val) => {
+                                            return (<option value={val}>{val}</option>)
+                                        })
+                                    }
                                 </select>
                             </div>
                         </div>
