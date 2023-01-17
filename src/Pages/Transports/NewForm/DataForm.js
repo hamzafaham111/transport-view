@@ -115,6 +115,15 @@ const DataForm = () => {
 
     const submit = async (e) => {
         e.preventDefault();
+        let emptyElements = [];
+        for (let key of Object.keys(data)) {
+            if (!data[key]) {
+                emptyElements.push(key);
+            }
+        }
+        emptyElements.map((val) => {
+            return document.getElementById(val).style = "border:solid red 2px"
+        })
         await axios.post(`${process.env.REACT_APP_DOMAIN}/add-document`, { documentData: data, recipientData: selectedRecipitent, finalProducts, lastProducts: productData }, {
             headers: {
                 ID: user._id
@@ -145,20 +154,20 @@ const DataForm = () => {
 
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">DN° Documento</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required onChange={handleChange} name="docNo" />
+                        <input style={{ border: "solid gray 1px" }} type="text" id="docNo" required onChange={handleChange} name="docNo" />
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Data inizio trasporto</label>
-                        <input style={{ border: "solid gray 1px" }} type="date" required onChange={handleChange} name="docDate" />
+                        <input style={{ border: "solid gray 1px" }} type="date" id="docDate" required onChange={handleChange} name="docDate" />
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Ora inizio trasporto</label>
-                        <input style={{ border: "solid gray 1px" }} type="time" required onChange={handleChange} name="transportStartTime" />
+                        <input style={{ border: "solid gray 1px" }} type="time" id="transportStartTime" required onChange={handleChange} name="transportStartTime" />
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Beni viaggianti a mezzo:</label>
                         {/* <input style={{ border: "solid gray 1px" }} type="time" onChange={handleChange} name="goodsTravilingByMeans" /> */}
-                        <select style={{ border: "solid gray 1px" }} required name="goodsTravilingByMeans" onChange={handleChange}>
+                        <select style={{ border: "solid gray 1px" }} required id="goodsTravilingByMeans" name="goodsTravilingByMeans" onChange={handleChange}>
                             <option></option>
                             <option value="Mittente">Mittente</option>
                             <option value="Vettore">Vettore</option>
@@ -167,21 +176,21 @@ const DataForm = () => {
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo mitente</label>
-                        <select style={{ border: "solid gray 1px" }} required name="sanderAddress" onChange={handleChange}>
+                        <select style={{ border: "solid gray 1px" }} required id="sanderAddress" name="sanderAddress" onChange={handleChange}>
                             <option></option>
                             <option value="Sede Legale">Sede Legale</option>
                         </select>
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Agente incaricato</label>
-                        <select style={{ border: "solid gray 1px" }} required name="agentInCharge" onChange={handleChange}>
+                        <select style={{ border: "solid gray 1px" }} required id="agentInCharge" name="agentInCharge" onChange={handleChange}>
                             <option></option>
                             <option value="Non Defento">Non Defento</option>
                         </select>
                     </div>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Status</label>
-                        <select style={{ border: "solid gray 1px" }} required name="status" onChange={handleChange}>
+                        <select style={{ border: "solid gray 1px" }} required id="status" name="status" onChange={handleChange}>
                             <option>--selezionare--</option>
                             <option value="done">Done</option>
                             <option value="pending">Pending</option>
@@ -193,7 +202,7 @@ const DataForm = () => {
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Denominazione</label>
-                        <select className='w-full' style={{ border: "solid gray 1px" }} required name="recipientName" onChange={handleChange}>
+                        <select className='w-full' style={{ border: "solid gray 1px" }} required id="recipientName" name="recipientName" onChange={handleChange}>
                             <option>Seleziona Denominazione</option>
                             {
                                 recipitentData.map((val) => {
@@ -220,11 +229,11 @@ const DataForm = () => {
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} required className="my-0 py-0">Provincia
                         </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" name="recipientProvince" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" id="recipientProvince" name="recipientProvince" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
-                        <label style={{ fontWeight: "500", fontSize: "12px" }} required className="my-0 py-0">Nazione</label>
-                        <select style={{ border: "solid gray 1px" }} name="recipientNation" onChange={handleChange}>
+                        <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Nazione</label>
+                        <select style={{ border: "solid gray 1px" }} name="recipientNation" id="recipientNation" onChange={handleChange}>
                             <option>--selezionare--</option>
                             <option value="Italia">Italia</option>
                         </select>
@@ -236,25 +245,25 @@ const DataForm = () => {
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo ( Scegli un indirizzo tra le sedi del Cliente)</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodDestinationAddress" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationAddress" name="goodDestinationAddress" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">CAP</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodDestinationPostalCode" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationPostalCode" name="goodDestinationPostalCode" onChange={handleChange} />
                     </div>
 
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Città</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodsDestinationCity" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodsDestinationCity" name="goodsDestinationCity" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Provincia
                         </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required name="goodDestinationProvince" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationProvince" name="goodDestinationProvince" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" >Nazione</label>
-                        <select style={{ border: "solid gray 1px" }} required name="goodDestinationNation" onChange={handleChange} >
+                        <select style={{ border: "solid gray 1px" }} required id="goodDestinationNation" name="goodDestinationNation" onChange={handleChange} >
                             <option>--selezionare--</option>
                             <option value="Italia">Italia</option>
                         </select>
@@ -313,7 +322,7 @@ const DataForm = () => {
                     <div className='flex gap-2'>
                         <div className='flex flex-column justify-center w-3/12'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Descrizione</label>
-                            <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
+                            <input type="text" style={{ border: "solid gray 1px", width: "100%" }} name="productDescription" id="productDescription" placeholder="--Seleziona Descrizione--" onChange={handleProduct} value={productData.productDescription} />
                             <div style={{ display: list }}>
                                 <ul style={{ position: "absolute", display: "flex", dispay: "flex", flexDirection: "column", background: "white", width: "200px", borderRadius: "10px", minheight: "300px", overflow: "auto", marginTop: "5px" }} onClick={(e) => { setList("none") }}>
                                     {
@@ -370,11 +379,11 @@ const DataForm = () => {
                 <div className='gap-2 border-2 border-gray-600 mb-2 p-1'>
                     <div className='flex flex-row justify-center w-full my-1'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="w-1/6 my-0 py-0">Vettore 1</label>
-                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" className="w-5/6" name="career1" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" className="w-5/6" id="career1" name="career1" onChange={handleChange} />
                     </div>
                     <div className='flex flex-row justify-center w-full  my-1'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="w-1/6 my-0 py-0">Vettore 2</label>
-                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" className="w-5/6" name="career2" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" className="w-5/6" id="career2" name="career2" onChange={handleChange} />
                     </div>
                     <div className='flex flex-row justify-center w-full  my-1'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="w-1/6 my-0 py-0">Vettore 3</label>
@@ -386,21 +395,21 @@ const DataForm = () => {
                 <div className='border-2 border-gray-600 mb-2 p-1'>
                     <div className='flex flex-col justify-center w-full'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Causale</label>
-                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" name="causal" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" id="causal" name="causal" onChange={handleChange} />
                     </div>
                     <div className='flex flex-col gap-2 w-full'>
                         <div className='flex flex-row gap-2 w-full'>
                             <div className='flex flex-col justify-center w-2/5'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Aspetto esteriore dei beni</label>
-                                <input style={{ border: "solid gray 1px", width: "100%" }} type="text" name="externalAppariance" onChange={handleChange} />
+                                <input style={{ border: "solid gray 1px", width: "100%" }} type="text" id="externalAppariance" name="externalAppariance" onChange={handleChange} />
                             </div>
                             <div className='flex flex-col justify-center w-2/5'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Porto</label>
-                                <input style={{ border: "solid gray 1px", width: "100%" }} type="text" name="port" onChange={handleChange} />
+                                <input style={{ border: "solid gray 1px", width: "100%" }} type="text" id="port" name="port" onChange={handleChange} />
                             </div>
                             <div className='flex flex-col justify-center w-1/5'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">N° colli</label>
-                                <input style={{ border: "solid gray 1px", width: "100%" }} type="text" name="noPackeges" onChange={handleChange} />
+                                <input style={{ border: "solid gray 1px", width: "100%" }} type="text" id="noPackeges" name="noPackeges" onChange={handleChange} />
                             </div>
                         </div>
 
