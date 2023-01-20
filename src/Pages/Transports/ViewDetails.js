@@ -27,12 +27,12 @@ const ViewDetails = () => {
     return (
         <div>
             <Breadcrumb t="transporter Details" />
+            <div className='bg-gray-600 mb-5'>
+                <Pdf targetRef={ref} filename="example.pdf" options={options} >
+                    {({ toPdf }) => <button onClick={toPdf} className="bg-gray-600 px-2 py-1 rounded-sm text-white font-bold">Download Pdf <i className='ion-android-download text-lg text-white mx-2'></i></button>}
+                </Pdf>
+            </div>
             <div className='content '>
-                <div className='bg-gray-600 mb-5'>
-                    <Pdf targetRef={ref} filename="example.pdf" options={options} >
-                        {({ toPdf }) => <button onClick={toPdf} className="bg-gray-600 px-2 py-1 rounded-sm text-white font-bold">Download Pdf <i className='ion-android-download text-lg text-white mx-2'></i></button>}
-                    </Pdf>
-                </div>
                 <div ref={ref} style={{ width: "8.27in", height: "11.69in", margin: "auto", background: "white", }}>
                     <div>
                         <div className='bg-blue-500 py-3 text-center'>
