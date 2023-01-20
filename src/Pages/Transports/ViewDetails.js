@@ -27,15 +27,15 @@ const ViewDetails = () => {
     return (
         <div>
             <Breadcrumb t="transporter Details" />
-            <div className='content' style={{ width: "8.3in", margin: "auto", marginTop: "20px" }}>
-                <div className='bg-gray-600'>
-                    <Pdf targetRef={ref} filename="example.pdf" options={options} style={{ width: "8.3in", margin: "auto", }} >
+            <div className='content '>
+                <div className='bg-gray-600 mb-5'>
+                    <Pdf targetRef={ref} filename="example.pdf" options={options} >
                         {({ toPdf }) => <button onClick={toPdf} className="bg-gray-600 px-2 py-1 rounded-sm text-white font-bold">Download Pdf <i className='ion-android-download text-lg text-white mx-2'></i></button>}
                     </Pdf>
                 </div>
-                <div className="bg-white" ref={ref}>
+                <div ref={ref} style={{ width: "8.27in", height: "11.69in", margin: "auto", background: "white", }}>
                     <div>
-                        <div className='bg-blue-500 py-2 text-center'>
+                        <div className='bg-blue-500 py-3 text-center'>
                             <snap className="text-orange-200 text-5xl font-bold">OIL SISTEMS</snap>
                         </div>
                         <div className='border-b-2 border-blue-900 flex flex-row items-center justify-between mb-3 px-2'>
@@ -49,11 +49,10 @@ const ViewDetails = () => {
                             <FiberManualRecordIcon className='text-xs text-yellow-300' />
                             <snap className='text-sm font-bold text-blue-900'>GPL</snap>
                             <FiberManualRecordIcon className='text-xs text-yellow-300' />
-
                             <snap className='text-sm font-bold text-blue-900'>METANO</snap>
                         </div>
                     </div>
-                    <div className='px-4 pb-2'>
+                    <div className='px-4 pb-2' >
                         <div className='flex flex-col items-end '>
                             <div className='flex flex-col items-start '>
                                 <div className='flex flex-col '>
@@ -114,7 +113,7 @@ const ViewDetails = () => {
                             <span className='text-xs pb-8 border-b-2 border-black'>{data.career3}</span>
                         </div>
                     </div>
-                    <div className='mt-40'>
+                    <div className='mt-40 absolute bottom-0'>
                         <div className='flex flex-row'>
                             <div className='text-gray-500'>_______________________________</div>
                             <span className=' text-gray-500'><span className='font-bold'>OIL SISTEMS S.A.S.</span> di Quintalunce Michele & C.div</span>

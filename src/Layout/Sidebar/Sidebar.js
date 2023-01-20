@@ -24,7 +24,7 @@ const Sidebar = () => {
                                 <Link to="/dashboard#" className="nav-link active">
                                     <i className="nav-icon fas fa-tachometer-alt" />
                                     <p>
-                                        cruscotto
+                                        Cruscotto
                                     </p>
                                 </Link>
 
@@ -41,7 +41,7 @@ const Sidebar = () => {
                                 <Link to="transports" className="nav-link">
                                     <i className="far ion-document-text nav-icon" />
                                     <p>
-                                        documenti di transporto
+                                        Documenti di transporto
                                     </p>
                                 </Link>
                             </li>

@@ -5,6 +5,7 @@ import Select2 from 'react-select2-wrapper';
 
 const DataForm = () => {
     const history = useNavigate()
+
     const [filtered, setFiltered] = useState([])
     const [recipitentData, setRecipitentData] = useState([])
     const [selectedRecipitent, setSelectedRecipitent] = useState({})
@@ -98,7 +99,27 @@ const DataForm = () => {
 
         setSelectedRecipitent(singleData)
     }
+    const [checked, setChecked] = useState(false)
+    const [goodsDestination, setGoodsDestination] = useState({
 
+    })
+    const handleChecked = () => {
+        if (checked == false) {
+            alert("false");
+            setChecked(true)
+
+            setData({
+                ...data,
+                goodDestinationAddress: selectedRecipitent.address,
+                goodDestinationPostalCode: selectedRecipitent.postalcode,
+                goodsDestinationCity: selectedRecipitent.city,
+                goodDestinationProvince: selectedRecipitent.province,
+            })
+        } else {
+            alert("true");
+            setChecked(false)
+        }
+    }
     const user = JSON.parse(localStorage.getItem("user"))
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -147,6 +168,7 @@ const DataForm = () => {
         })
 
     }, [])
+
     return (
         <>
             <form onClick={(e) => { setList("none") }} >
@@ -241,25 +263,27 @@ const DataForm = () => {
                 </div>
 
                 <label className="my-0 py-0">Luogo di destinazione dei beni</label>
-                <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
-
-                    <div className='flex flex-col justify-center w-4/12'>
+                <div className='flex flex-row items-end gap-2 border-2 border-gray-600 mb-2 p-1'>
+                    <div className='flex flex-col items-start w-4/12'>
+                        <div className='flex flex-row border'>
+                            <input type="checkbox" name="chack" onClick={handleChecked} className='cursor-pointer' />
+                            <span className='ml-2 font-medium'>same as above</span>
+                        </div>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo ( Scegli un indirizzo tra le sedi del Cliente)</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationAddress" name="goodDestinationAddress" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px", width: "100%" }} type="text" required id="goodDestinationAddress" name="goodDestinationAddress" onChange={handleChange} value={data.goodDestinationAddress} />
                     </div>
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">CAP</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationPostalCode" name="goodDestinationPostalCode" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationPostalCode" name="goodDestinationPostalCode" onChange={handleChange} value={data.goodDestinationPostalCode} />
                     </div>
-
                     <div className='flex flex-col justify-center w-3/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Città</label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodsDestinationCity" name="goodsDestinationCity" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodsDestinationCity" name="goodsDestinationCity" onChange={handleChange} value={data.goodsDestinationCity} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Provincia
                         </label>
-                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationProvince" name="goodDestinationProvince" onChange={handleChange} />
+                        <input style={{ border: "solid gray 1px" }} type="text" required id="goodDestinationProvince" name="goodDestinationProvince" onChange={handleChange} value={data.goodDestinationProvince} />
                     </div>
                     <div className='flex flex-col justify-center w-1/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" >Nazione</label>
@@ -415,7 +439,7 @@ const DataForm = () => {
 
                         <div className='flex flex-col justify-center w-2/2'>
                             <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Annotazioni</label>
-                            <textarea style={{ border: "solid gray 1px", width: "100%" }} type="text" name="annotations" onChange={handleChange} />
+                            <textarea style={{ border: "solid gray 1px", width: "100%" }} id="annotations" type="text" name="annotations" onChange={handleChange} />
                         </div>
                     </div>
                 </div>
