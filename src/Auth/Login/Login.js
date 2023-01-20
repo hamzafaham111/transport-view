@@ -75,7 +75,7 @@ const Login = (Props) => {
                     <Button disableElevation variant="contained" onClick={() => {
                         login(); progressFunction(true)
                     }} fullWidth style={{ marginTop: "30px", marginBottom: "20px", background: "#ed6418", color: "white" }}>Accesso</Button>
-                    <span style={{ color: "#ed6418", cursor: "pointer", }}>Account non creato? <snap style={{ fontWeight: "bold" }} onClick={() => { Props.cb(false) }}>Registro</snap></span>
+                    {/* <span style={{ color: "#ed6418", cursor: "pointer", }}>Account non creato? <snap style={{ fontWeight: "bold" }} onClick={() => { Props.cb(false) }}>Registro</snap></span> */}
                 </Box>
             </Container>
         </div >

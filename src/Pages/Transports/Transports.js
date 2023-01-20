@@ -95,20 +95,20 @@ const Transports = () => {
                         </Link>
                         <div className='flex flex-row gap-2'>
                             <div className='flex flex-col'>
-                                <label className="text-sm font-medium text-gray-500">Search By Document No</label>
+                                <label className="text-sm font-medium text-gray-500">Ricerca per documento n.</label>
                                 <input
                                     type="text"
                                     style={{ border: "solid gray 1px", padding: "0 10px" }}
                                     className="text-sm py-1"
-                                    placeholder='Search By Document No'
+                                    placeholder='Ricerca per documento n.'
                                     value={search}
                                     onChange={(e) => { setSearch(e.target.value) }}
                                 />
                             </div>
                             <div className='flex flex-col'>
-                                <label className="text-sm font-medium text-gray-500">Search By Year</label>
+                                <label className="text-sm font-medium text-gray-500">Ricerca per anni</label>
                                 <select style={{ border: "solid gray 1px", padding: "0 10px", color: "gray" }} className="text-sm py-1" onChange={dates}>
-                                    <option value="">--select year--</option>
+                                    <option value="">--seleziona l'anno--</option>
                                     {
                                         years.map((val) => {
                                             return (<option value={val}>{val}</option>)
