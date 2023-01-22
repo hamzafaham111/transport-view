@@ -22,7 +22,7 @@ const ViewDetails = () => {
     const options = {
         orientation: 'portrait',
         unit: 'in',
-        format: [8.3, 11.7]
+        format: [8.27, 11.7]
     };
     return (
         <div>
