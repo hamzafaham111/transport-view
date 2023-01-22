@@ -40,15 +40,15 @@ const ViewDetails = () => {
                         </div>
                         <div className='border-b-2 border-blue-900 flex flex-row items-center justify-between mb-3 px-2'>
                             <snap className='text-sm font-bold text-blue-900'>COSTRUZIONE E MANUTENZIONE</snap>
-                            <FiberManualRecordIcon className='text-xs text-yellow-300' />
+                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>IMPIANTI E DEPOSITI CARBURANTI</snap>
-                            <FiberManualRecordIcon className='text-xs text-yellow-300' />
+                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>GASOLIO</snap>
-                            <FiberManualRecordIcon className='text-xs text-yellow-300' />
+                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>BENZINA</snap>
-                            <FiberManualRecordIcon className='text-xs text-yellow-300' />
+                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>GPL</snap>
-                            <FiberManualRecordIcon className='text-xs text-yellow-300' />
+                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>METANO</snap>
                         </div>
                     </div>
