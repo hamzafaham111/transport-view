@@ -356,7 +356,7 @@ const DataForm = () => {
                                     </div>
                                     <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" disabled >IVA %</label>
-                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="number" name=" IVA" onChange={handleChange} value={val.IVA} />
+                                        <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="number" disabled name=" IVA" onChange={handleChange} value={val.IVA} />
                                     </div>
                                     <div className='w-1/12 flex justify-center mb-1 items-end'>
                                         <span><i className='ion-close-circled text-lg text-red-600' onClick={() => { deleteFinalProducts(index) }}></i></span>

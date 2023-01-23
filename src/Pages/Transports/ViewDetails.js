@@ -3,7 +3,7 @@ import Pdf from "react-to-pdf";
 import Breadcrumb from '../../components/Breadcrumb'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
+
 const ViewDetails = () => {
     const { documentID } = useParams();
     const [data, setData] = useState({})
@@ -22,42 +22,34 @@ const ViewDetails = () => {
     const options = {
         orientation: 'portrait',
         unit: 'in',
-        format: [8.27, 11.7]
+        format: [8.27, 11.7],
+
     };
     return (
         <div>
             <Breadcrumb t="transporter Details" />
             <div className='bg-gray-600 mb-5'>
-                <Pdf targetRef={ref} filename="example.pdf" options={options} >
+                <Pdf targetRef={ref} filename="example.pdf" options={options} scale={1}>
                     {({ toPdf }) => <button onClick={toPdf} className="bg-gray-600 px-2 py-1 rounded-sm text-white font-bold">Download Pdf <i className='ion-android-download text-lg text-white mx-2'></i></button>}
                 </Pdf>
             </div>
-            <div className='content '>
-                <div ref={ref} style={{ width: "8.27in", height: "11.69in", margin: "auto", background: "white", }}>
+            <div className='content'>
+                <div ref={ref} style={{ width: "8.27in", height: "11.7in", margin: "auto", background: "white", }}>
                     <div>
                         <div className='bg-blue-500 py-3 text-center'>
                             <snap className="text-orange-200 text-5xl font-bold">OIL SISTEMS</snap>
                         </div>
                         <div className='border-b-2 border-blue-900 flex flex-row items-center justify-between mb-3 px-2'>
                             <snap className='text-sm font-bold text-blue-900'>COSTRUZIONE E MANUTENZIONE</snap>
-                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <div className='' style={{ height: "8px", width: "8px", background: "yellow", borderRadius: "50px" }}></div>
                             <snap className='text-sm font-bold text-blue-900'>IMPIANTI E DEPOSITI CARBURANTI</snap>
-                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <div className='' style={{ height: "8px", width: "8px", background: "yellow", borderRadius: "50px" }}></div>
-
                             <snap className='text-sm font-bold text-blue-900'>GASOLIO</snap>
                             <div className='' style={{ height: "8px", width: "8px", background: "yellow", borderRadius: "50px" }}></div>
-
-                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>BENZINA</snap>
                             <div className='' style={{ height: "8px", width: "8px", background: "yellow", borderRadius: "50px" }}></div>
-
-                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>GPL</snap>
                             <div className='' style={{ height: "8px", width: "8px", background: "yellow", borderRadius: "50px" }}></div>
-
-                            {/* <FiberManualRecordIcon className='text-xs text-yellow-300' /> */}
                             <snap className='text-sm font-bold text-blue-900'>METANO</snap>
                         </div>
                     </div>
