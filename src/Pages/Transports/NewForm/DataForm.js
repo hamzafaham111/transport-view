@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import Select2 from 'react-select2-wrapper';
-
+import DatePicker from 'react-date-picker';
 const DataForm = () => {
     const history = useNavigate()
 
@@ -13,6 +13,7 @@ const DataForm = () => {
     let [notOfProducts, setNoOfProducts] = useState([])
     const [list, setList] = useState("none")
     const [finalProducts, setFinalProducts] = useState([])
+    const [docNo, setDocNo] = useState()
     const [productData, setProductData] = useState({
         productDescription: "",
         productQuantity: "",
@@ -77,6 +78,7 @@ const DataForm = () => {
         })
         setFinalProducts(afterDelete)
     }
+
     const clickedProduct = (id) => {
         const singleData = products.find((val) => {
             return val._id == id
@@ -85,8 +87,6 @@ const DataForm = () => {
     }
 
     const [data, setData] = useState({
-
-        docNo: "",
         docDate: "",
         transportStartTime: "",
         goodsTravilingByMeans: "",
@@ -183,6 +183,7 @@ const DataForm = () => {
             }
         }).then((res) => {
             setRecipitentData(res.data.data)
+            setDocNo(res.data.docNo);
         })
         axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
             setProducts(res.data.data)
@@ -190,25 +191,33 @@ const DataForm = () => {
         })
 
     }, [])
+    // const date = document.getElementById("docDate");
+    // const transportStartTime = document.getElementById("transportStartTime");
 
+    // date.addEventListener("keydown", function (event) {
+    //     event.preventDefault();
+    // });
+    // transportStartTime.addEventListener("keydown", function (event) {
+    //     event.preventDefault();
+    // });
     return (
         <>
             <form onClick={(e) => { setList("none") }} >
                 <div className='flex flex-row gap-2 border-2 border-gray-600 mb-2 p-1'>
 
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">DN° Documento</label>
-                        <input style={{ border: "solid gray 1px" }} type="number" id="docNo" required onChange={handleChange} name="docNo" />
+                        <input style={{ border: "solid gray 1px" }} disabled type="number" required onChange={handleChange} value={docNo} />
                     </div>
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Data inizio trasporto</label>
-                        <input style={{ border: "solid gray 1px" }} type="date" id="docDate" required onChange={handleChange} name="docDate" />
+                        <input style={{ border: "solid gray 1px" }} onKeyDown={(e) => e.preventDefault()} type="date" readonly id="docDate" required onChange={handleChange} name="docDate" />
                     </div>
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Ora inizio trasporto</label>
-                        <input style={{ border: "solid gray 1px" }} type="time" id="transportStartTime" required onChange={handleChange} name="transportStartTime" />
+                        <input style={{ border: "solid gray 1px" }} onKeyDown={(e) => e.preventDefault()} type="time" readonly id="transportStartTime" required onChange={handleChange} name="transportStartTime" />
                     </div>
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Beni viaggianti a mezzo:</label>
                         {/* <input style={{ border: "solid gray 1px" }} type="time" onChange={handleChange} name="goodsTravilingByMeans" /> */}
                         <select style={{ border: "solid gray 1px" }} required id="goodsTravilingByMeans" name="goodsTravilingByMeans" onChange={handleChange}>
@@ -218,21 +227,21 @@ const DataForm = () => {
                             <option value="destinatario">Destinatario</option>
                         </select>
                     </div>
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo mitente</label>
                         <select style={{ border: "solid gray 1px" }} required id="sanderAddress" name="sanderAddress" onChange={handleChange}>
                             <option></option>
                             <option value="Sede Legale">Sede Legale</option>
                         </select>
                     </div>
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Agente incaricato</label>
                         <select style={{ border: "solid gray 1px" }} required id="agentInCharge" name="agentInCharge" onChange={handleChange}>
                             <option></option>
                             <option value="Non Defento">Non Definito</option>
                         </select>
                     </div>
-                    <div className='flex flex-col justify-center w-full'>
+                    <div className='flex flex-col justify-center w-2/12'>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Status</label>
                         <select style={{ border: "solid gray 1px" }} required id="status" name="status" onChange={handleChange}>
                             <option>--selezionare--</option>

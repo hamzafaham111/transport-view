@@ -67,6 +67,7 @@ const EditForm = () => {
             document.getElementById("productDescription").style = "border:solid red 2px"
         }
         else {
+            alert("here we are")
             setFinalProducts([...finalProducts, productData])
             setProductData({
                 productDescription: "",
@@ -121,7 +122,7 @@ const EditForm = () => {
         setSelectedRecipitent(singleData)
     }
     const update = async () => {
-        await axios.post(`${process.env.REACT_APP_DOMAIN}/update-document`, { documentData: data }, {
+        await axios.post(`${process.env.REACT_APP_DOMAIN}/update-document`, { documentData: data, finalProducts, lastProducts: productData }, {
             headers: {
                 documentID: documentID,
             }
@@ -151,6 +152,12 @@ const EditForm = () => {
         }).then((res) => {
             setRecipitentData(res.data.data)
         }, [])
+
+        axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
+            setProducts(res.data.data)
+            setFiltered(res.data.data)
+        })
+
     })
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_DOMAIN}/document-data`, {
