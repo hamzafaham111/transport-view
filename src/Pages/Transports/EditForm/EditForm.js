@@ -38,12 +38,7 @@ const EditForm = () => {
     })
     const { documentID } = useParams();
     const [recipitentData, setRecipitentData] = useState([])
-    const [selectedRecipitent, setSelectedRecipitent] = useState({
-        address: "",
-        city: "",
-        postalcode: "",
-        province: "",
-    })
+    const [selectedRecipitent, setSelectedRecipitent] = useState({})
     const [products, setProducts] = useState([])
     const [filtered, setFiltered] = useState([])
     const [list, setList] = useState("none")
@@ -72,7 +67,6 @@ const EditForm = () => {
             document.getElementById("productDescription").style = "border:solid red 2px"
         }
         else {
-            alert("here we are")
             setFinalProducts([...finalProducts, productData])
             setProductData({
                 productDescription: "",
@@ -123,9 +117,16 @@ const EditForm = () => {
         const singleData = recipitentData.find((val) => {
             return val.callsign == callsign;
         })
-        console.log(singleData);
-        setSelectedRecipitent(singleData)
+        const { address, postalcode, city, province, } = singleData
+        setData({
+            ...data,
+            recipientaddress: address,
+            recipientPostalCode: postalcode,
+            recipientCity: city,
+            recipientProvince: province,
+        })
     }
+
     const update = async () => {
         await axios.post(`${process.env.REACT_APP_DOMAIN}/update-document`, { documentData: data, finalProducts, lastProducts: productData }, {
             headers: {
@@ -140,6 +141,7 @@ const EditForm = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         if (name == "recipientName") {
+
             handleRecipitent(e.target.value)
         }
         setData((preValue) => {
@@ -156,6 +158,7 @@ const EditForm = () => {
             }
         }).then((res) => {
             setRecipitentData(res.data.data)
+            console.log(res.data.data);
         }, [])
 
         axios.get(`${process.env.REACT_APP_DOMAIN}/get-products-data`).then((res) => {
@@ -163,7 +166,7 @@ const EditForm = () => {
             setFiltered(res.data.data)
         })
 
-    })
+    }, [])
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_DOMAIN}/document-data`, {
             headers: {
@@ -223,8 +226,8 @@ const EditForm = () => {
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Status</label>
                                 <select style={{ border: "solid gray 1px" }} name="status" onChange={handleChange}>
                                     <option selected value={data.status}>{data.status}</option>
-                                    <option value="done">Done</option>
-                                    <option value="pending">Pending</option>
+                                    <option value="Completato">Completato</option>
+                                    <option value="In Attesa">In Attesa</option>
                                 </select>
                             </div>
                         </div>
@@ -247,22 +250,21 @@ const EditForm = () => {
                             </div>
                             <div className='flex flex-col justify-center w-3/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Selezion altirizzi</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientaddress" onChange={handleChange} value={selectedRecipitent.address} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientaddress" onChange={handleChange} value={data.recipientaddress} />
                             </div>
                             <div className='flex flex-col justify-center w-1/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">CAP</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientPostalCode" onChange={handleChange} value={selectedRecipitent.postalcode} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientPostalCode" onChange={handleChange} value={data.recipientPostalCode} />
                             </div>
                             <div className='flex flex-col justify-center w-3/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">
                                     Città</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientCity" onChange={handleChange} value={selectedRecipitent.city} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientCity" onChange={handleChange} value={data.recipientCity} />
                             </div>
                             <div className='flex flex-col justify-center w-1/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Provincia
                                 </label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientProvince" onChange={handleChange} value={selectedRecipitent.province
-                                } />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientProvince" onChange={handleChange} value={data.recipientProvince} />
                             </div>
                             <div className='flex flex-col justify-center w-1/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Nazione</label>
@@ -344,7 +346,7 @@ const EditForm = () => {
                                             </div>
                                             <div className='flex flex-col justify-center w-1/12 my-1 text-center'>
                                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0" disabled >IVA %</label>
-                                                <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" type="number" name=" IVA" onChange={handleChange} value={val.IVA} />
+                                                <input style={{ border: "solid gray 1px", width: "100%", textAlign: "center" }} placeholder="00" disabled type="number" name=" IVA" onChange={handleChange} value={val.IVA} />
                                             </div>
                                             <div className='w-1/12 flex justify-center mb-1 items-end'>
                                                 <span><i className='ion-close-circled text-lg text-red-600' onClick={() => { deleteFinalProducts(index) }}></i></span>

@@ -245,8 +245,8 @@ const DataForm = () => {
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Status</label>
                         <select style={{ border: "solid gray 1px" }} required id="status" name="status" onChange={handleChange}>
                             <option>--selezionare--</option>
-                            <option value="done">Completato</option>
-                            <option value="pending">In Attesa</option>
+                            <option value="Completato">Completato</option>
+                            <option value="In Attesa">In Attesa</option>
                         </select>
                     </div>
                 </div>
