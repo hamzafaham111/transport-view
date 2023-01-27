@@ -38,7 +38,12 @@ const EditForm = () => {
     })
     const { documentID } = useParams();
     const [recipitentData, setRecipitentData] = useState([])
-    const [selectedRecipitent, setSelectedRecipitent] = useState({})
+    const [selectedRecipitent, setSelectedRecipitent] = useState({
+        address: "",
+        city: "",
+        postalcode: "",
+        province: "",
+    })
     const [products, setProducts] = useState([])
     const [filtered, setFiltered] = useState([])
     const [list, setList] = useState("none")
@@ -118,7 +123,7 @@ const EditForm = () => {
         const singleData = recipitentData.find((val) => {
             return val.callsign == callsign;
         })
-
+        console.log(singleData);
         setSelectedRecipitent(singleData)
     }
     const update = async () => {
@@ -166,6 +171,7 @@ const EditForm = () => {
             }
         }).then((res) => {
             setData(res.data.data);
+            console.log(res.data.data);
             setFinalProducts(res.data.data.products)
         }).catch((err) => { alert(err.response.data.error) })
     }, [])
@@ -187,7 +193,7 @@ const EditForm = () => {
                             </div>
                             <div className='flex flex-col justify-center w-full'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Ora inizio trasporto</label>
-                                <input style={{ border: "solid gray 1px" }} type="type" onKeyDown={(e) => e.preventDefault()} onChange={handleChange} name="transportStartTime" value={data.transportStartTime} />
+                                <input style={{ border: "solid gray 1px" }} type="time" onKeyDown={(e) => e.preventDefault()} onChange={handleChange} name="transportStartTime" value={data.transportStartTime} />
                             </div>
                             <div className='flex flex-col justify-center w-full'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Beni viaggianti a mezzo:</label>
@@ -241,21 +247,22 @@ const EditForm = () => {
                             </div>
                             <div className='flex flex-col justify-center w-3/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Selezion altirizzi</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientaddress" onChange={handleChange} value={data.recipientaddress} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientaddress" onChange={handleChange} value={selectedRecipitent.address} />
                             </div>
                             <div className='flex flex-col justify-center w-1/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">CAP</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientPostalCode" onChange={handleChange} value={data.recipientPostalCode} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientPostalCode" onChange={handleChange} value={selectedRecipitent.postalcode} />
                             </div>
                             <div className='flex flex-col justify-center w-3/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">
                                     Città</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientCity" onChange={handleChange} value={data.recipientCity} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientCity" onChange={handleChange} value={selectedRecipitent.city} />
                             </div>
                             <div className='flex flex-col justify-center w-1/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Provincia
                                 </label>
-                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientProvince" onChange={handleChange} value={data.recipientProvince} />
+                                <input style={{ border: "solid gray 1px" }} type="text" name="recipientProvince" onChange={handleChange} value={selectedRecipitent.province
+                                } />
                             </div>
                             <div className='flex flex-col justify-center w-1/12'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Nazione</label>

@@ -298,7 +298,7 @@ const DataForm = () => {
                     <div className='flex flex-col items-start w-4/12'>
                         <div className='flex flex-row border'>
                             <input type="checkbox" name="chack" onClick={handleChecked} className='cursor-pointer' />
-                            <span className='ml-2 font-medium'>same as above</span>
+                            <span className='ml-2 font-medium'>copia indirizzo in alto</span>
                         </div>
                         <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Indirizzo ( Scegli un indirizzo tra le sedi del Cliente)</label>
                         <input style={{ border: "solid gray 1px", width: "100%" }} type="text" required id="goodDestinationAddress" name="goodDestinationAddress" onChange={handleChange} value={data.goodDestinationAddress} />
