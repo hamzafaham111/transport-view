@@ -179,15 +179,15 @@ const EditForm = () => {
 
                             <div className='flex flex-col justify-center w-full'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">DN° Documento</label>
-                                <input style={{ border: "solid gray 1px" }} type="text" onChange={handleChange} name="docNo" value={data.docNo} />
+                                <input style={{ border: "solid gray 1px" }} type="text" disabled onChange={handleChange} name="docNo" value={data.docNo} />
                             </div>
                             <div className='flex flex-col justify-center w-full'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Data inizio trasporto</label>
-                                <input style={{ border: "solid gray 1px" }} type="date" onChange={handleChange} name="docDate" value={data.docDate} />
+                                <input style={{ border: "solid gray 1px" }} type="date" onKeyDown={(e) => e.preventDefault()} onChange={handleChange} name="docDate" value={data.docDate} />
                             </div>
                             <div className='flex flex-col justify-center w-full'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Ora inizio trasporto</label>
-                                <input style={{ border: "solid gray 1px" }} type="type" onChange={handleChange} name="transportStartTime" value={data.transportStartTime} />
+                                <input style={{ border: "solid gray 1px" }} type="type" onKeyDown={(e) => e.preventDefault()} onChange={handleChange} name="transportStartTime" value={data.transportStartTime} />
                             </div>
                             <div className='flex flex-col justify-center w-full'>
                                 <label style={{ fontWeight: "500", fontSize: "12px" }} className="my-0 py-0">Beni viaggianti a mezzo:</label>
